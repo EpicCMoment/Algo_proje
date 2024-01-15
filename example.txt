@@ -1,0 +1,6 @@
+r r w w
+y o o y
+o w b b
+g g y r
+g w o g
+y b b r
