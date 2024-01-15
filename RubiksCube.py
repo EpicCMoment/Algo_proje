@@ -1,12 +1,14 @@
+import numpy as np
 import copy
 
 # cube face indices
-front : int = 0
-back : int = 1
-top : int = 2
-bottom : int = 3
-left : int = 4
-right : int = 5
+front: int = 0
+back: int = 1
+top: int = 2
+bottom: int = 3
+left: int = 4
+right: int = 5
+
 
 class RubiksCube:
 
@@ -23,7 +25,6 @@ class RubiksCube:
 
             A face is represented clock-wise from top left corner.
         '''
-
         solved_shape = [
             ['R', 'R', 'R', 'R'],  # Front
             ['O', 'O', 'O', 'O'],  # Back
@@ -34,12 +35,10 @@ class RubiksCube:
         ]
 
         # if no custom shape is provided, create a solved cube
-
         if shape is None:
             self.shape = copy.deepcopy(solved_shape)
         else:
             self.shape = copy.deepcopy(shape)
-
 
     def __repr__(self) -> str:
 
@@ -141,7 +140,6 @@ class RubiksCube:
 
         self.shape[left][2] = saved_cubes[0]
         self.shape[left][3] = saved_cubes[1]
-
 
         s = self.shape[bottom].pop(0)
         self.shape[bottom].append(s)
@@ -353,13 +351,13 @@ class RubiksCube:
 
         return True
 
+    def __hash__(self):
+
+        return sum(self.shape, [])
+
 
 def is_same_state(c1: RubiksCube, c2: RubiksCube):
-    for f1, f2 in zip(c1.shape, c2.shape):
+    if c1.__hash__() == c2.__hash__():
+        return True
 
-        for c1, c2 in zip(f1, f2):
-
-            if c1 != c2:
-                return False
-
-    return True
+    return False
